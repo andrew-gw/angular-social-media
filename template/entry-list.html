@@ -1,0 +1,20 @@
+<!-- Entries Container -->
+<div class="list-group" ng-controller="EntryListController as entrylist">
+	<!-- Single Entry -->
+	<article class="list-group-item" ng-repeat="entry in entries">
+		<date>{{entry.formatted_date}}</date>
+		<br/>{{entry.content}}
+		<!-- <entry-toolbar></entry-toolbar> -->
+		<!-- Tabs Go Here -->
+		<section>
+
+			<div class="btn-group btn-group-sm" role="group" aria-label="Entry Options">
+				<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-comment"></i></button>
+				<button type="button" class="btn btn-default" ng-class="{'btn-success': starred}" ng-click="starred=!starred"><i ng-class="{true:'glyphicon glyphicon-star', false:'glyphicon glyphicon-star-empty'}[starred]"></i></button>
+				<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-flag"></i></button>
+				<a ng-href="#/entries/{{entry.entryID}}" role="button" class="btn btn-default"><i class="glyphicon glyphicon-link"></i></a>
+			</div>
+			
+		</section>
+	</article>
+</div>

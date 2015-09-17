@@ -1,0 +1,27 @@
+<!--  Product Reviews List -->
+<!-- <ul>
+  <li ng-repeat="review in product.reviews">
+    <blockquote>
+      {{review.body}}
+      <cite class="clearfix">—{{review.author}}</cite>
+    </blockquote>
+  </li>
+</ul> -->
+
+<!--  Review Form -->
+<form name="reviewForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate>
+
+  <!--  Live Preview -->
+	<!-- <blockquote ng-show="reviewForm.$valid && reviewForm.$dirty">
+    {{reviewCtrl.review.body}}
+    <cite class="clearfix">—{{reviewCtrl.review.author}}</cite>
+  </blockquote> -->
+
+  <!--  Review Form -->
+  <fieldset class="form-group">
+    <textarea ng-model="reviewCtrl.review.body" class="form-control" placeholder="Add comment&hellip;" title="Add Comment" required></textarea>
+  </fieldset>
+  <fieldset class="form-group">
+    <input type="submit" class="btn btn-primary pull-right" value="Add Comment" />
+  </fieldset>
+</form>

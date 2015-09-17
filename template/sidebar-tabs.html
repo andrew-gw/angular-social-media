@@ -1,0 +1,36 @@
+<!-- Tabs Go Here -->
+<section>
+
+  <ul class="nav nav-pills">
+    <li ng-class="{ active:tab.isSet(1) }">
+			<a href ng-click="tab.setTab(1)"><i class="material-icons">access_time</i></a>
+    </li>
+    <li ng-class="{ active:tab.isSet(2) }">
+			<a href ng-click="tab.setTab(2)"><i class="material-icons">label</i></a>
+    </li>
+    <li ng-class="{ active:tab.isSet(3) }">
+			<a href ng-click="tab.setTab(3)"><i class="material-icons">location_on</i></a>
+    </li>
+  </ul>
+
+  <!--  Date Tab Contents  -->
+  <div ng-show="tab.isSet(1)" class="poopoo">
+	  
+	  <ul class="list-group" ng-repeat="(key,year) in timeline.years">
+			<li>
+				<a href="#" class="list-group-item">{{key}}</a>
+				<ul ng-repeat="month in year">
+					<li><a href="#" class="list-group-item">{{month}}</a></li>
+				</ul>
+			</li>
+		</ul>
+	  
+  </div>
+  
+  <!--  Tag Tab Contents  -->
+	<div ng-show="tab.isSet(2)"></div>
+	
+  <!--  Location Tab Contents  -->
+	<div ng-show="tab.isSet(3)"></div>
+  
+</section>
