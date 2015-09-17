@@ -27,14 +27,14 @@
 			$scope.message = '';
 
 			$scope.submit = function () {
-				$http.post('api/authenticate', $scope.user)
+				$http.post('api/access_token', $scope.user)
 				.success(function (data, status, headers, config) {
 					// $window.sessionStorage.token = data.token;
-					$scope.message = 'Welcome' + data.username + ", " + data.password;
+					$scope.message = data;
 				})
 				.error(function (data, status, headers, config) {
 					// Erase the token if the user fails to log in
-					delete $window.sessionStorage.token;
+					// delete $window.sessionStorage.token;
 					
 					// Handle login errors here
 					//$scope.message = 'Error: Invalid user or password';

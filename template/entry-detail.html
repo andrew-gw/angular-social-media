@@ -1,6 +1,19 @@
-<div class="list-group">
-	<article class="list-group-item">
-		<date>{{entry.formatted_date}}</date>
-		<br/>{{entry.content}}
-	</article>
+<!-- Entries Container -->
+<div class="list-group" ng-controller="EntryDetailCtrl as entrydetail">
+	<!-- Single Entry -->
+	<div class="list-group">
+		<article class="list-group-item">
+			<date>{{entry.formatted_date}}</date>
+			<br/>{{entry.content}}
+		</article>
+	</div>
+
+	<div class="list-group">
+		<article class="list-group-item" ng-repeat="comment in comments">
+			<date>{{comment.date}}</date>
+			<br/>{{comment.userID}}
+			<br/>{{comment.content}}
+		</article>
+	</div>
+
 </div>

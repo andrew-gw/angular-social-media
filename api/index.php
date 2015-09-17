@@ -10,7 +10,7 @@ $app->contentType('application/json');
 $db = new PDO('mysql:host=localhost;dbname=jrnlbeta;charset=utf8', 'root', 'iZ97Tu3639W48mmX46VM');
 
 /*
-		49. USER
+		49: USER
 			 1. register(email, pass, avatar, fname, lname, secret, answer)
 			 2. userExists(email)
 			 3. login(email, pass)
@@ -18,7 +18,7 @@ $db = new PDO('mysql:host=localhost;dbname=jrnlbeta;charset=utf8', 'root', 'iZ97
 			 5. resetPassword(email, answer)
 			 6. logout(userID)
 	
-		69. ENTRY
+		69: ENTRY
 			 7. createEntry(userID, date, privacy, link, tags[], photos[], location, content)
 			 8. deleteEntry(entryID)
 			 9. updateEntry(entryID, date, privacy, link, tags[], photos[], location, content)
@@ -28,7 +28,7 @@ $db = new PDO('mysql:host=localhost;dbname=jrnlbeta;charset=utf8', 'root', 'iZ97
 			13. star(entryID)
 			14. report(entryID)
 			
-		COMMENT
+		106: COMMENTS
 			15. getComments(entryID)
 			16. createComment(userID, entryID, date, content)
 			17. deleteComment(commentID)
@@ -65,7 +65,7 @@ $app->post('/authenticate/',
 	}
 );
 
-$app->get('/user/',
+$app->get('/users/',
 	function () use ($db, $app) {
 		$statement=$db->prepare("SELECT * FROM user;");
 		$statement->execute();
@@ -85,13 +85,10 @@ $app->get('/user/:id',
 
 // ENTRY
 
-$app->get('/entry/',
+$app->get('/entries/',
 	function () use ($db, $app) {
-		// print_r($app->jwt);
-		$sth=$db->query("SELECT entryID, DATE_FORMAT(date, '%b %D, %l:%i %p') as formatted_date, content FROM entry ORDER BY date DESC;");
+		$sth=$db->query("SELECT entryID, content, DATE_FORMAT(date, '%b %D, %l:%i %p') as formatted_date,(SELECT count(commentID) FROM comment WHERE entry.entryID = comment.entryID) as commentCount, EXISTS(SELECT * FROM starred WHERE userID = 1 AND starred.entryID = entry.entryID) AS starred FROM entry ORDER BY date DESC;");
 		echo(json_encode($sth->fetchAll(PDO::FETCH_CLASS)));
-		
-		// $app->response()->status(201);
 	}
 );
 
@@ -100,6 +97,52 @@ $app->get('/entry/:id',
 		$sth=$db->prepare("SELECT DATE_FORMAT(date, '%b %D, %l:%i %p') as formatted_date, content FROM entry WHERE entryID = ? LIMIT 1;");
 		$sth->execute([intval($id)]);
 		echo json_encode($sth->fetchAll(PDO::FETCH_CLASS)[0]);
+	}
+);
+
+$app->post('/star/',
+	function () use ($db, $app) {
+		$requestBody = $app->request->getBody();
+		$request = json_decode($requestBody);
+		$userID = $request->userID;
+		$entryID = $request->entryID;
+
+		$sql = "SELECT * FROM starred WHERE userID = :userID AND entryID = :entryID;";
+
+		try {
+			$stmt = $db->prepare($sql);  
+			$stmt->bindParam("userID", $userID);
+			$stmt->bindParam("entryID", $entryID);
+			$rowBool = $stmt->execute();
+
+			if ($rowBool) {
+    		
+			} else {
+				$sql = "INSERT INTO starred (starredID, userID, entryID) VALUES (NULL, :userID, :entryID);";
+				try {
+					$stmt = $db->prepare($sql);  
+					$stmt->bindParam("userID", $userID);
+					$stmt->bindParam("entryID", $entryID);
+				} catch(PDOException $e) {
+      		echo '{"error":{"text":'. $e->getMessage() .'}}';
+    		}
+			}
+		} catch(PDOException $e) {
+      echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
+    $response = Array("starred"=>$rowBool);
+    echo json_encode($response);
+	}
+);
+
+// COMMENTS
+
+$app->get('/entry/:id/comments',
+	function ($id) use ($db, $app) {
+		$sth=$db->prepare("SELECT * FROM comment WHERE entryID = ?;");
+		$sth->execute([intval($id)]);
+		echo(json_encode($sth->fetchAll(PDO::FETCH_CLASS)));
 	}
 );
 

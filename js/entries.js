@@ -13,22 +13,41 @@ app.filter('cleanTimestamp', function() {
 
 app.controller('EntryListController', ['$http','$scope',
 		function($http, $scope) {
-			$scope.starred = false;
-			$http.get('api/entry').success(function(data) {
+			$http.get('api/entries').success(function(data) {
 				$scope.entries = data;
 			}).error(function(data) {
 				alert("Error:" + data);
 			});
+
+			$scope.star = function (entry) {
+				$request = {userID: 1, entryID: entry.entryID};
+
+				$http.post('api/star', $request)
+				.success(function (data) {
+					entry.starred = data.starred;
+					// entry.starredCount = data.starredCount;
+				})
+				.error(function (data) {
+					alert(data);
+				});
+			};
 		}]);
 
 app.controller('EntryDetailCtrl', ['$http','$scope','$routeParams',
 		function($http,$scope,$routeParams) {
 			$scope.entryId = $routeParams.entryId;
+			$scope.comments = null;
 
 			$http.get('api/entry/' + $scope.entryId).success(function(data) {
 				$scope.entry = data;
 			}).error(function(data) {
-				alert("Error:" + data);
+				// alert("Error:" + data);
+			});
+
+			$http.get('api/entry/' + $scope.entryId + "/comments").success(function(data) {
+				$scope.comments = data;
+			}).error(function(data) {
+				// alert("Error:" + data);
 			});
 
 		}]);

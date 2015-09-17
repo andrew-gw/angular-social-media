@@ -9,10 +9,11 @@
 		<section>
 
 			<div class="btn-group btn-group-sm" role="group" aria-label="Entry Options">
-				<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-comment"></i></button>
-				<button type="button" class="btn btn-default" ng-class="{'btn-success': starred}" ng-click="starred=!starred"><i ng-class="{true:'glyphicon glyphicon-star', false:'glyphicon glyphicon-star-empty'}[starred]"></i></button>
+				<!-- <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-comment"></i>{{entry.commentCount}} </button> -->
+				<!-- <button type="button" class="btn btn-default" ng-model="entry.starred" ng-class="{'btn-success': entry.starred}" ng-click="starred=!starred"><i ng-class="{true:'glyphicon glyphicon-star', false:'glyphicon glyphicon-star-empty'}[entry.starred]"></i>{{entry.starred}}</button> -->
+				<button type="button" class="btn btn-default" ng-class="{1:'btn-primary', 0:''}[entry.starred]" ng-click="star(entry)"><i ng-class="{1:'glyphicon glyphicon-star', 0:'glyphicon glyphicon-star-empty'}[entry.starred]"></i> {{entry.starred}}</button>
 				<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-flag"></i></button>
-				<a ng-href="#/entries/{{entry.entryID}}" role="button" class="btn btn-default"><i class="glyphicon glyphicon-link"></i></a>
+				<a ng-href="#/entries/{{entry.entryID}}" role="button" class="btn btn-default"><i class="glyphicon glyphicon-comment"></i> {{entry.commentCount}}</a>
 			</div>
 			
 		</section>
