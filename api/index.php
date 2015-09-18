@@ -107,28 +107,29 @@ $app->post('/star/',
 		$userID = $request->userID;
 		$entryID = $request->entryID;
 
-		$sql = "SELECT * FROM starred WHERE userID = :userID AND entryID = :entryID;";
+		$sql = "INSERT INTO starred (starredID, userID, entryID) VALUES (NULL, :userID, :entryID);";
 
 		try {
 			$stmt = $db->prepare($sql);  
 			$stmt->bindParam("userID", $userID);
 			$stmt->bindParam("entryID", $entryID);
 			$rowBool = $stmt->execute();
-
-			if ($rowBool) {
-    		
-			} else {
-				$sql = "INSERT INTO starred (starredID, userID, entryID) VALUES (NULL, :userID, :entryID);";
-				try {
-					$stmt = $db->prepare($sql);  
-					$stmt->bindParam("userID", $userID);
-					$stmt->bindParam("entryID", $entryID);
-				} catch(PDOException $e) {
-      		echo '{"error":{"text":'. $e->getMessage() .'}}';
-    		}
-			}
 		} catch(PDOException $e) {
       echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
+    if (!$rowBool) {
+    	$sql = "DELETE FROM starred WHERE userID = :userID AND entryID = :entryID;";
+
+    	try {
+				$stmt = $db->prepare($sql);  
+				$stmt->bindParam("userID", $userID);
+				$stmt->bindParam("entryID", $entryID);
+				$stmt->execute();
+				// $rowBool = 0;
+			} catch(PDOException $e) {
+      	echo '{"error":{"text":'. $e->getMessage() .'}}';
+    	}
     }
 
     $response = Array("starred"=>$rowBool);

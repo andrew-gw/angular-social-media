@@ -28,7 +28,7 @@ app.controller('EntryListController', ['$http','$scope',
 					// entry.starredCount = data.starredCount;
 				})
 				.error(function (data) {
-					alert(data);
+					// alert(data);
 				});
 			};
 		}]);
