@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html ng-app="timeline">
-	
+<html ng-app="timeline" lang="en">
 	<head>
-
 		<title>Jrnl</title>
 		<!-- iOS Viewport -->
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
@@ -15,26 +13,29 @@
 		<!-- Bootrap -->
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	</head>
+	
+	<body>
+
+		<div class="container" ng-view></div>
+		
 		<!-- Material Icons -->
 		<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-	</head>
-
-	<body>
-
-		<div ng-view></div>
-		
 		<!-- jQuery -->
-		<!-- <script src="js/jquery.min.js"></script> -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 		<!-- Angular -->
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-animate.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.min.js"></script>
-		<!-- <script type="text/javascript" src="js/angular-route.min.js"></script> -->
+
+		<script src="js/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
+		<script src="js/ng-file-upload.min.js"></script>
+
 		<script type="text/javascript" src="js/app.js"></script>
-		<script type="text/javascript" src="js/entries.js"></script>
+		<script type="text/javascript" src="js/entry.js"></script>
+		<script type="text/javascript" src="js/user.js"></script>
 
 		<!-- Bootstrap -->
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -49,5 +50,4 @@
 		</script>
 
 	</body>
-
 </html>

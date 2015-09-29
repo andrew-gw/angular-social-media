@@ -1,5 +1,5 @@
 (function(){
-	var app = angular.module('entry-directives', []);
+	var app = angular.module('entry', []);
 
 app.filter('cleanTimestamp', function() {
 		return function(input) {

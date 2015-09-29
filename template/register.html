@@ -1,0 +1,101 @@
+<div ng-controller="RegisterCtrl">
+
+	<form name="registerForm" ng-submit="upload(file)" class="form-horizontal" novalidate>
+
+		<div class="form-group">
+			<label for="firstName" class="col-sm-2 control-label">First Name</label>
+			<div class="col-sm-10">
+				<input ng-model="user.firstName" type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" ng-required="true" autofocus/>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="lastName" class="col-sm-2 control-label">Last Name</label>
+			<div class="col-sm-10">
+				<input ng-model="user.lastName" type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" ng-required="true"/>
+			</div>
+		</div>
+
+		<br/>
+
+		<div class="form-group">
+			<label for="avatar" class="col-sm-2 control-label">Photo</label>
+			<div class="col-sm-10">
+				<input type="file" ngf-select accept="image/*" ng-model="file" name="file" ngf-valid-only="true" ngf-pattern="'image/*'" ngf-max-size="20MB" ngf-resize="{width: 96, height: 96, quality: 1.0}">
+				<img ngf-thumbnail="file" class="avatar" ngf-size="{width: 96, height: 96, quality: 1.0}">
+				<a class="btn btn-danger" ng-click="file = null" ng-show="file"><span class="glyphicon glyphicon-trash"></span> Remove</a>
+			</div>
+		</div>
+
+		<br/>
+
+		<div class="form-group">
+			<label for="email" class="col-sm-2 control-label">E-mail</label>
+			<div class="col-sm-10">
+				<!-- <p class="form-control-static">{{user.email}}</p> -->
+				<input ng-model="user.email" type="email" class="form-control" id="email" name="email" placeholder="me@example.com" ng-required="true"/>
+			</div>
+		</div>
+
+		<br/>
+
+		<div class="form-group">
+			<label for="password" class="col-sm-2 control-label">Password</label>
+			<div class="col-sm-10">
+				<input ng-model="user.password" type="password" class="form-control" id="password" name="password" placeholder="Password" ng-required="true" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="confirmPassword" class="col-sm-2 control-label">Confirm Password</label>
+			<div class="col-sm-10">
+				<input ng-model="user.confirmPassword" type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" ng-required="true" />
+			</div>
+		</div>
+		<br/>
+
+		<span class="help-block col-sm-offset-2">Something only you know, in case you forget your password or want to change it.</span>
+
+		<div class="form-group">
+			<label for="securityQuestion" class="col-sm-2 control-label">Secret Question</label>
+			<div class="col-sm-10">
+				<input ng-model="user.securityQuestion" type="text" class="form-control" id="securityQuestion" name="securityQuestion" placeholder="Mother's maiden name" ng-required="true" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="securityAnswer" class="col-sm-2 control-label">Answer</label>
+			<div class="col-sm-10">
+				<input ng-model="user.securityAnswer" type="text" class="form-control" id="securityAnswer" name="securityAnswer" placeholder="Answer" ng-required="true" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<a role="button" ng-href="#/login" class="btn btn-default">Cancel</a>
+				<button type="submit" class="btn btn-primary" ng-disabled="registerForm.$invalid">Register</button>
+				<span>{{message}}</span>
+			</div>
+		</div>
+	</form>
+
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tr>
+				<th>Avatar</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>E-mail</th>
+				<th></th>
+			</tr>
+			<tr ng-repeat="user in users">
+				<td><img ng-src="users/{{user.avatar}}" class="avatar" alt="User photo for {{user.firstName}}"></td>
+				<td>{{user.firstName}}</td>
+				<td>{{user.lastName}}</td>
+				<td>{{user.email}}</td>
+				<td><a ng-click="deleteUser(user)" class="btn btn-small btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span> Remove</a></td>
+			</tr>
+		</table>
+	</div>
+
+</div>
