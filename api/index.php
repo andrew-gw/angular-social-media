@@ -1,20 +1,12 @@
 <?php
 require '../libs/vendor/slim/slim/Slim/Slim.php';
-
+require 'db.php';
 \Slim\Slim::registerAutoloader();
-
 $app = new \Slim\Slim();
-
 $app->contentType('application/json');
 
-// $app->response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
-// $app->response->headers->set('Cache-Control', 'post-check=0, pre-check=0');
-// $app->response->headers->set('Pragma', 'no-cache');
-
-$db = new PDO('mysql:host=localhost;dbname=jrnlbeta;charset=utf8', 'root', 'iZ97Tu3639W48mmX46VM');
-
 /*
-		50: USER
+		47: USER
 			 1. POST->register(fname, lname, email, pass, passConfirm, avatar, secret, answer)
 			 2. GET->userExists(email)
 			 3. POST->login(email, pass)
@@ -22,7 +14,7 @@ $db = new PDO('mysql:host=localhost;dbname=jrnlbeta;charset=utf8', 'root', 'iZ97
 			 5. POST->resetPassword(email, answer)
 			 6. GET->logout(userID)
 	
-		120: ENTRY
+		138: ENTRY
 			 7. POST->createEntry(userID, date, privacy, link, tags[], photos[], location, content)
 			 8. DELETE->deleteEntry(entryID)
 			 9. PUT->updateEntry(entryID, date, privacy, link, tags[], photos[], location, content)
@@ -32,7 +24,7 @@ $db = new PDO('mysql:host=localhost;dbname=jrnlbeta;charset=utf8', 'root', 'iZ97
 			13. GET->star(entryID)
 			14. GET->report(entryID)
 			
-		168: COMMENTS
+		186: COMMENTS
 			15. getComments(entryID)
 			16. createComment(userID, entryID, date, content)
 			17. deleteComment(commentID)
@@ -53,11 +45,7 @@ $db = new PDO('mysql:host=localhost;dbname=jrnlbeta;charset=utf8', 'root', 'iZ97
 
 // USER
 
-function validate($formData) {
-
-}
-
-$app->post('/authenticate/', function () use ($db, $app) {
+$app->post('/login/', function () use ($db, $app) {
 	$requestBody = $app->request->getBody();
 	$requestUser = json_decode($requestBody);
 	$username = $requestUser->username;

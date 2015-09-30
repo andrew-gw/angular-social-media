@@ -2,10 +2,10 @@
 
 	<form name="registerForm" ng-submit="upload(file)" class="form-horizontal" novalidate>
 
-		<div class="form-group">
+		<div class="form-group" ng-class="{form-group has-error: registerForm.firstName.$error.required}">
 			<label for="firstName" class="col-sm-2 control-label">First Name</label>
 			<div class="col-sm-10">
-				<input ng-model="user.firstName" type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" ng-required="true" autofocus/>
+				<input ng-model="user.firstName" type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" ng-required="true" required autofocus/>
 			</div>
 		</div>
 
