@@ -1,1 +1,4 @@
 api/db.php
+users/*
+[Tt]humbs.db
+*.DS_Store
